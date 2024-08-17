@@ -1,26 +1,60 @@
-# Run:
-opkg list-installed > opkgList.txt
+# CVE Scanner
 
-# Export off system.
-winscp
-scp
-etc.
+## Overview
+The CVE Scanner is a Python tool designed to parse package manager listings (from `rpm`, `dpkg`, and `opkg`), perform a lookup in the National Vulnerability Database (NVD) for associated Common Vulnerabilities and Exposures (CVEs), and generate a well-formatted Excel report.
 
-# Run:
-cat opkgList.txt | sed 's/[+].*$//' | sed 's/\-r.*//' | sed 's/\~r.*//' | sed '/-/!d' > newpackageTest.txt
+## Features
+- **Package Manager Support:** Handles output from `dpkg`, `rpm`, and `opkg`.
+- **NVD Lookup:** Queries the NVD API to retrieve CVEs associated with each package and version.
+- **Excel Report:** Outputs the results into an Excel spreadsheet for easy analysis.
+- **Modular Design:** Easily extendable and maintainable codebase.
 
-or
+## Prerequisites
+- Python 3.x
+- Install required Python packages by running:
 
-nvd-cve-tool_v3.py <paramteres>
+```bash
+pip install requests openpyxl
+```
 
-# To run on sbom folder of files:
-python .\nvd-cve-tool_v2.py -s sbom -f C:\Users\GDLSO06\Desktop\PIT_EDGE\swid\pit-edge-hypervisor-deploy-image -o C:\Users\GDLSO06\Desktop\PIT_EDGE\cve\output.txt -k 9e0a566b-c66d-487b-bc98-0b64773224ff
+## Usage
 
-# To run on the file with the output of 'opkg list-installed' command:
-python .\nvd-cve-tool_v2.py -s sbom -i C:\Users\GDLSO06\Desktop\PIT_EDGE\cve\opkgList.txt -o C:\Users\GDLSO06\Desktop\PIT_EDGE\cve\output.txt -k 9e0a566b-c66d-487b-bc98-0b64773224ff
+### Command-Line Arguments
+- `--package-manager`: Specify the package manager (`dpkg`, `rpm`, or `opkg`).
+- `--input-file`: File containing the package listing from the package manager.
+- `--output-file`: Output Excel file name (default: `cve_report.xlsx`).
+- `--api-key`: NVD API key (optional but recommended to avoid rate limits).
 
-Both of the above options will create an output file (outputfile.txt) that contains the "fixed" package names after running through the parser. It will also create an excel document named "output.xlsx" in that location with the results from the NVD cve checks against the package names.
+### Example Command
+```bash
+python main.py --package-manager dpkg --input-file dpkgList.txt --output-file cve_report.xlsx --api-key your-nvd-api-key
+```
 
-# RPM
-rpm -qa --queryformat "%{NAME} - %{VERSION}\n"
+## Input Files
+- For `dpkg`: Generate the package list using `dpkg-query -W -f='${Package} ${Version}
+' > dpkgList.txt`.
+- For `rpm`: Generate the package list using `rpm -qa --queryformat "%{NAME} - %{VERSION}
+" > rpmList.txt`.
+- For `opkg`: Generate the package list using `opkg list-installed > opkgList.txt`.
 
+## Output
+- An Excel file containing a list of packages with associated CVEs, CVSS scores, published dates, and descriptions.
+
+## Project Structure
+```
+cve_scanner/
+│
+├── parsers/
+│   ├── dpkg_parser.py
+│   ├── rpm_parser.py
+│   └── opkg_parser.py
+│
+├── nvd_lookup.py
+├── excel_output.py
+├── main.py
+├── utils.py
+└── README.md
+```
+
+## License
+This project is licensed under the MIT License.
