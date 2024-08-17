@@ -13,6 +13,11 @@ The CVE Scanner is a Python tool designed to parse package manager listings (fro
 - Python 3.x
 - Install required Python packages by running:
 
+## Package Manager File Staging to obtain the package listing and run with this tool.
+- **opkg:** opkg list-installed > opkgList.txt
+- **dpkg:** dpkg-query -W -f='${Package} ${Version}\n' > dpkgList.txt
+- **rpm:** rpm -qa --queryformat "%{NAME} - %{VERSION}\n" > rpmList.txt
+
 ```bash
 pip install requests openpyxl
 ```
