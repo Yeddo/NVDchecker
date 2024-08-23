@@ -196,12 +196,6 @@ pciutils - 3.6.2-r0
 pciutils-ids - 3.6.2-r0
 perl - 5.30.0-r0
 perl-module-config-heavy - 5.30.0-r0
-pit-edge-hypervisor-devel-selinux-policy - 1.0-r0
-pit-edge-hypervisor-prpd - 4.3-0
-pit-edge-ima-policy-devel - 1.0-r0
-pit-edge-installer - 1.0+git0+8fa0bf6430-r2
-pit-edge-installer-kernel - 1.0-r0
-pit-edge-user - 1.0.0.0-r0
 pixman - 1:0.38.4-r0
 pm-utils - 1.4.1-r1
 policycoreutils - 2.8-r0

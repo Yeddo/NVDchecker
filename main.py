@@ -2,6 +2,17 @@ from parsers import dpkg_parser, rpm_parser, opkg_parser
 from nvd_lookup import nvd_search
 from excel_output import save_to_excel
 from utils import parse_args
+from utils import delay_print
+
+print ("""
+    .----.   @   @
+   / .-"-.`.  \v/
+   | | '\ \ \_/ )
+ ,-\ `-.' /.'  /
+'---`----'----'
+""")
+delay_print('Snail CVE Lookup Tool ... ¯\_(ツ)_/¯')
+print ('\n')
 
 def main():
     args = parse_args()

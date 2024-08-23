@@ -10,7 +10,7 @@ def nvd_search(packages, api_key=None):
             url = f"{base_url}?apikey={api_key}&cpeMatchString=cpe:2.3:a:*:{package_name}:{package_version}"
         else:
             url = f"{base_url}?cpeMatchString=cpe:2.3:a:*:{package_name}:{package_version}"
-            time.sleep(6)
+            time.sleep(6) # Rate limiting for anonymous API usage
 
         response = requests.get(url)
         if response.status_code == 200:

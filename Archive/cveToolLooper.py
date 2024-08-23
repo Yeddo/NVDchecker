@@ -1,9 +1,9 @@
 # ***********************************************************************
-# AUTHOR = Jason Bisnette
+# AUTHOR = JB
 # COPYRIGHT = 
 # LICENSE = 
 # VERSION = 1.0
-# EMAIL = jason.bisnette@gmail.com
+# EMAIL = 
 # DESCRIPTION = This script runs the cve-bin-tool.py on a folder of files
 # USAGE = .\<tool>.py
 # FILENAME = <tool>.py
