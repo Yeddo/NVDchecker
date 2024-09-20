@@ -34,11 +34,9 @@ python main.py --package-manager dpkg --input-file dpkgList.txt --output-file cv
 ```
 
 ## Input File Generation from Host
-- For `dpkg`: Generate the package list using `dpkg-query -W -f='${Package} ${Version}
-' > dpkgList.txt`.
-- For `rpm`: Generate the package list using `rpm -qa --queryformat "%{NAME} - %{VERSION}
-" > rpmList.txt`.
-- For `opkg`: Generate the package list using `opkg list-installed > opkgList.txt`.
+- For `dpkg`: Generate the package list using `dpkg-query -W -f='${Package} - ${Version}\n' > dpkgList.txt`
+- For `rpm`: Generate the package list using `rpm -qa --queryformat "%{NAME} - %{VERSION}\n" > rpmList.txt`
+- For `opkg`: Generate the package list using `opkg list-installed > opkgList.txt`
 
 ## Output
 - An Excel file containing a list of packages with associated CVEs, CVSS scores, published dates, and descriptions.
@@ -61,3 +59,25 @@ cve_scanner/
 
 ## License
 This project is licensed under the MIT License.
+
+
+## NOTES
+CPE Format (v2.3):
+cpe:2.3:<part>:<vendor>:<product>:<version>:<update>:<edition>:<language>:<sw_edition>:<target_sw>:<target_hw>:<other>
+Breakdown:
+
+    <part>: This identifies the type of product:
+        a for applications (software)
+        o for operating systems
+        h for hardware
+    <vendor>: The vendor or manufacturer of the product.
+    <product>: The name of the product.
+    <version>: The version number of the product.
+    <update>: The update level of the product.
+    <edition>: The edition of the product.
+    <language>: The language of the product.
+    <sw_edition>: The software edition (e.g., Professional, Enterprise).
+    <target_sw>: The target software environment (e.g., Android, iOS).
+    <target_hw>: The target hardware environment (e.g., ARM, x86).
+    <other>: Other variations of the product.
+  
