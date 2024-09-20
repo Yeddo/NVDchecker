@@ -1,31 +1,33 @@
 import requests
 import time
-import json  # Importing json for handling JSON exceptions
+import json            # Importing json for handling JSON exceptions
 from tqdm import tqdm  # Progress bar library
-import sys  # For controlling output stream
+import sys             # For controlling output stream
 
 def nvd_search(packages, api_key=None):
     cve_results = []
-    base_url = "https://services.nvd.nist.gov/rest/json/cpematch/2.0"
+    base_url = "https://services.nvd.nist.gov/rest/json/cves/2.0"
 
     # List to collect log messages so we don't interfere with tqdm
     log_messages = []
+    headers = {}
 
     # Wrapping the loop with tqdm for progress display
     with tqdm(total=len(packages), desc="Querying NVD for CVEs", unit="package", dynamic_ncols=True, leave=True, file=sys.stdout) as pbar:
         for package_name, package_version in packages:
-            # Format the CPE string with the proper API parameters
-            cpe_name = f"cpe:2.3:a:*:{package_name}:{package_version}"
+            # Construct the CPE string for the given package name and version
+            cpe_name = f"cpe:2.3:a:*:{package_name}:{package_version}:*:*:*:*:*:*:*"
+            # https://nvd.nist.gov/developers/vulnerabilities
+            url = f"{base_url}?virtualMatchString={cpe_name}"
 
-            # Construct the URL with or without the API key
+            # Construct the headers with or without the API key
             if api_key:
-                url = f"{base_url}?apiKey={api_key}&cpeName={cpe_name}"
+                headers['apiKey'] = api_key
             else:
-                url = f"{base_url}?cpeName={cpe_name}"
                 time.sleep(6)  # Rate limiting for anonymous API usage
 
             try:
-                response = requests.get(url)
+                response = requests.get(url, headers=headers)
             except requests.exceptions.RequestException as e:
                 log_messages.append(f"Error while requesting {package_name}-{package_version}: {e}")
                 pbar.update(1)
@@ -34,19 +36,27 @@ def nvd_search(packages, api_key=None):
             # Handle different response codes, including 404
             if response.status_code == 200:
                 try:
-                    # Parse the CPE match response
-                    cpe_matches = response.json().get("matches", [])
+                    # Parse the CVE response for vulnerabilities
+                    vulnerabilities = response.json().get("vulnerabilities", [])
 
-                    # Iterate over CPE matches to extract CVE information
-                    for match in cpe_matches:
-                        vulnerabilities = match.get("vulnerabilities", [])
-                        for vuln in vulnerabilities:
-                            cve_id = vuln.get("cve", {}).get("id", "Unknown CVE ID")
-                            description = vuln.get("description", "No description available")
-                            cvss_v3_metrics = vuln.get("metrics", {}).get("cvssMetricV31", [{}])
+                    if not vulnerabilities:
+                        # If no vulnerabilities are found, log it
+                        cve_results.append((package_name, package_version, "No vulnerabilities found", "-", "-", "-"))
+                    else:
+                        # Iterate over the vulnerabilities and extract relevant CVE information
+                        for vuln_item in vulnerabilities:
+                            cve = vuln_item.get("cve", {})
+                            cve_id = cve.get("id", "Unknown CVE ID")
+                            description = cve.get("descriptions", [{}])[0].get("value", "No description available")
+                            
+                            # Extract CVSS score
+                            cvss_v3_metrics = cve.get("metrics", {}).get("cvssMetricV31", [{}])
                             cvss_score = cvss_v3_metrics[0].get("cvssData", {}).get("baseScore", "Not Provided")
-                            published_date = vuln.get("published", "Unknown publish date")
+                            
+                            # Get the publish date of the vulnerability
+                            published_date = cve.get("publishedDate", "Unknown publish date")
 
+                            # Append the parsed CVE data to the results list
                             cve_results.append((package_name, package_version, cve_id, cvss_score, published_date, description))
 
                 except json.JSONDecodeError:

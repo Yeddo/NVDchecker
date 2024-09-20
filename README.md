@@ -62,6 +62,10 @@ This project is licensed under the MIT License.
 
 
 ## NOTES
+https://nvd.nist.gov/developers/vulnerabilities
+
+https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:*:*:*:*:*:*:*
+
 CPE Format (v2.3):
 
 '''bash
