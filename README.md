@@ -64,8 +64,9 @@ This project is licensed under the MIT License.
 ## NOTES
 CPE Format (v2.3):
 
+'''bash
 cpe:2.3:<part>:<vendor>:<product>:<version>:<update>:<edition>:<language>:<sw_edition>:<target_sw>:<target_hw>:<other>
-
+'''
 Breakdown:
 
     <part>: This identifies the type of product:
