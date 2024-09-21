@@ -4,10 +4,11 @@ import time
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Snail CVE Scanner")
-    parser.add_argument("--package-manager", required=True, choices=["dpkg", "rpm", "opkg"], help="Specify the package manager")
-    parser.add_argument("--input-file", required=True, help="File containing the package listing")
+    parser.add_argument("--package-manager", required=False, choices=["dpkg", "rpm", "opkg"], help="Specify the package manager")
+    parser.add_argument("--input-file", required=True, help="File containing the package listing OR SBOM folder")
     parser.add_argument("--output-file", default="cve_report.xlsx", help="Output Excel file")
     parser.add_argument("--api-key", help="NVD API key (optional)")
+    parser.add_argument("--sbom", help="SBOM option requires a directory to be specified where the sbom files are located")
     return parser.parse_args()
 
 # Function to print text slowly. Fancy!

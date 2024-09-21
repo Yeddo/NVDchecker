@@ -36,7 +36,7 @@ def save_to_excel(cve_results, output_file):
     # Resize all the columns
     ws.column_dimensions['A'].width = 30
     ws.column_dimensions['B'].width = 16
-    ws.column_dimensions['C'].width = 20
+    ws.column_dimensions['C'].width = 25
     ws.column_dimensions['D'].width = 11
     ws.column_dimensions['E'].width = 18
     ws.column_dimensions['F'].width = 20

@@ -20,14 +20,14 @@ def nvd_search(packages, api_key=None):
             # https://nvd.nist.gov/developers/vulnerabilities
             url = f"{base_url}?virtualMatchString={cpe_name}"
 
-            # Construct the headers with or without the API key
-            if api_key:
-                headers['apiKey'] = api_key
-            else:
-                time.sleep(6)  # Rate limiting for anonymous API usage
-
             try:
-                response = requests.get(url, headers=headers)
+                # If you have an API Key. Do yourself a favor and get/use one.
+                if api_key:
+                    headers['apiKey'] = api_key
+                    response = requests.get(url, headers=headers)
+                else:
+                    time.sleep(6) # Rate limiting for anonymous API usage
+                    response = requests.get(url)
             except requests.exceptions.RequestException as e:
                 log_messages.append(f"Error while requesting {package_name}-{package_version}: {e}")
                 pbar.update(1)

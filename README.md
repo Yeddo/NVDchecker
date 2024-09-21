@@ -1,10 +1,9 @@
-# NOT COMPLETE
-
-
 # CVE Scanner
 
 ## Overview
 The CVE Scanner is a Python tool designed to parse package manager listings (from `rpm`, `dpkg`, and `opkg`), perform a lookup in the National Vulnerability Database (NVD) for associated Common Vulnerabilities and Exposures (CVEs), and generate a well-formatted Excel report.
+
+It has been updated to use the 2.0 API.
 
 ## Features
 - **Package Manager Support:** Handles output from `dpkg`, `rpm`, and `opkg`.
@@ -67,10 +66,9 @@ https://nvd.nist.gov/developers/vulnerabilities
 https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:*:*:*:*:*:*:*
 
 CPE Format (v2.3):
-
-'''bash
+```bash
 cpe:2.3:<part>:<vendor>:<product>:<version>:<update>:<edition>:<language>:<sw_edition>:<target_sw>:<target_hw>:<other>
-'''
+```
 Breakdown:
 
     <part>: This identifies the type of product:
