@@ -1,7 +1,7 @@
 # CVE Scanner
 
 ## Overview
-The CVE Scanner is a Python tool designed to parse package manager listings (from `rpm`, `dpkg`, and `opkg`), perform a lookup in the National Vulnerability Database (NVD) for associated Common Vulnerabilities and Exposures (CVEs), and generate a well-formatted Excel report.
+The CVE Scanner is a Python tool designed to parse package manager listings (from `rpm`, `dpkg`, and `opkg`), perform a lookup in the National Vulnerability Database (NVD) for associated Common Vulnerabilities and Exposures (CVEs), and generate a report in excel.
 
 It has been updated to use the 2.0 API.
 
@@ -14,10 +14,10 @@ It has been updated to use the 2.0 API.
 ## Prerequisites
 - Python 3.x
 - Install required Python packages by running:
-
 ```bash
-pip install requests openpyxl
+pip3 install -r requirements.txt
 ```
+
 
 ## Usage
 
@@ -26,6 +26,7 @@ pip install requests openpyxl
 - `--input-file`: File containing the package listing from the package manager.
 - `--output-file`: Output Excel file name (default: `cve_report.xlsx`).
 - `--api-key`: NVD API key (optional but recommended to avoid rate limits).
+- `--sbom`: SBOM parser (SWID tags from SWID yocto receipe specifically) May not work with other SBOM formats.
 
 ### Example Command
 ```bash
@@ -58,7 +59,6 @@ cve_scanner/
 
 ## License
 This project is licensed under the MIT License.
-
 
 ## NOTES
 https://nvd.nist.gov/developers/vulnerabilities
