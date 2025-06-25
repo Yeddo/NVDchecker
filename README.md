@@ -9,7 +9,6 @@ It has been updated to use the 2.0 API.
 - **Package Manager Support:** Handles output from `dpkg`, `rpm`, and `opkg`.
 - **NVD Lookup:** Queries the NVD API to retrieve CVEs associated with each package and version.
 - **Excel Report:** Outputs the results into an Excel spreadsheet for easy analysis.
-- **Modular Design:** Easily extendable and maintainable codebase.
 
 ## Prerequisites
 - Python 3.x
