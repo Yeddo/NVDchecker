@@ -1,7 +1,7 @@
 # CVE Scanner
 
 ## Overview
-The CVE Scanner is a Python tool designed to parse package manager listings (from `rpm`, `dpkg`, and `opkg`), perform a lookup in the National Vulnerability Database (NVD) for associated Common Vulnerabilities and Exposures (CVEs), and generate a report in excel.
+A Python tool designed to parse package manager listings (from `rpm`, `dpkg`, and `opkg`), perform a lookup in the National Vulnerability Database (NVD) for associated Common Vulnerabilities and Exposures (CVEs), and generate a report in excel.
 
 It has been updated to use the 2.0 API.
 
